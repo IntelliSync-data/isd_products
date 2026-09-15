@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="module_category_isd_products" model="ir.module.category">
+        <field name="name">ISD Products</field>
+        <field name="sequence">100</field>
+    </record>
+
+    <record id="group_product_user" model="res.groups">
+        <field name="name">Product User</field>
+        <field name="category_id" ref="module_category_isd_products"/>
+        <field name="comment">Can upload products and manage categories</field>
+    </record>
+
+    <record id="group_product_admin" model="res.groups">
+        <field name="name">Product Administrator</field>
+        <field name="category_id" ref="module_category_isd_products"/>
+        <field name="implied_ids" eval="[(4, ref('group_product_user'))]"/>
+        <field name="comment">Full access including configuration</field>
+    </record>
+</odoo>

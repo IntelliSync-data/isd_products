@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_isd_product_user,isd.product.user,model_isd_product,group_product_user,1,1,1,0
+access_isd_product_admin,isd.product.admin,model_isd_product,group_product_admin,1,1,1,1
+access_isd_product_category_user,isd.product.category.user,model_isd_product_category,group_product_user,1,1,1,0
+access_isd_product_category_admin,isd.product.category.admin,model_isd_product_category,group_product_admin,1,1,1,1
+access_isd_product_tag_user,isd.product.tag.user,model_isd_product_tag,group_product_user,1,1,1,0
+access_isd_product_tag_admin,isd.product.tag.admin,model_isd_product_tag,group_product_admin,1,1,1,1
+access_isd_product_allowed_origin_admin,isd.product.allowed_origin.admin,model_isd_product_allowed_origin,group_product_admin,1,1,1,1
+access_isd_product_api_doc_wizard_admin,isd.product.api.doc.wizard.admin,model_isd_product_api_doc_wizard,group_product_admin,1,1,1,1

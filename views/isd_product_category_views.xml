@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_isd_product_category_list" model="ir.ui.view">
+        <field name="name">isd.product.category.list</field>
+        <field name="model">isd.product.category</field>
+        <field name="arch" type="xml">
+            <list string="Categories" default_order="sort_order asc">
+                <field name="avatar" widget="image" options="{'size': [40, 40]}"/>
+                <field name="name"/>
+                <field name="description"/>
+                <field name="sort_order"/>
+                <field name="product_count"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_isd_product_category_form" model="ir.ui.view">
+        <field name="name">isd.product.category.form</field>
+        <field name="model">isd.product.category</field>
+        <field name="arch" type="xml">
+            <form string="Category">
+                <sheet>
+                    <field name="avatar" widget="image" class="oe_avatar" options="{'size': [128, 128]}"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Category Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="description"/>
+                            <field name="sort_order"/>
+                        </group>
+                        <group>
+                            <field name="active"/>
+                            <field name="product_count"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_isd_product_category_search" model="ir.ui.view">
+        <field name="name">isd.product.category.search</field>
+        <field name="model">isd.product.category</field>
+        <field name="arch" type="xml">
+            <search string="Search Categories">
+                <field name="name"/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_isd_product_category" model="ir.actions.act_window">
+        <field name="name">Categories</field>
+        <field name="res_model">isd.product.category</field>
+        <field name="view_mode">list,form</field>
+        <field name="path">isd-product-categories</field>
+        <field name="search_view_id" ref="view_isd_product_category_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first category
+            </p>
+            <p>Organize products into categories.</p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_isd_product_api_doc_wizard_form" model="ir.ui.view">
+        <field name="name">isd.product.api.doc.wizard.form</field>
+        <field name="model">isd.product.api.doc.wizard</field>
+        <field name="arch" type="xml">
+            <form string="API Documentation">
+                <sheet>
+                    <field name="documentation_html" readonly="1" nolabel="1"/>
+                </sheet>
+                <footer>
+                    <button string="Close" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

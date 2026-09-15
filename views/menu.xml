@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_isd_products_root"
+              name="Products (by ISD)"
+              web_icon="isd_products,static/description/icon.png"
+              sequence="95"/>
+
+    <menuitem id="menu_isd_products_upload"
+              name="Products"
+              parent="menu_isd_products_root"
+              action="action_isd_product"
+              groups="group_product_user"
+              sequence="10"/>
+
+    <menuitem id="menu_isd_products_category"
+              name="Categories"
+              parent="menu_isd_products_root"
+              action="action_isd_product_category"
+              groups="group_product_user"
+              sequence="20"/>
+
+    <menuitem id="menu_isd_products_tag"
+              name="Tags"
+              parent="menu_isd_products_root"
+              action="action_isd_product_tag"
+              groups="group_product_user"
+              sequence="30"/>
+
+    <menuitem id="menu_isd_products_config"
+              name="Configuration"
+              parent="menu_isd_products_root"
+              action="action_isd_products_configuration"
+              groups="group_product_admin"
+              sequence="90"/>
+</odoo>

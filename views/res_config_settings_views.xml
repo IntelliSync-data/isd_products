@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.isd_products</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="10"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="ISD Products" string="ISD Products" name="isd_products">
+                    <block title="Dashboard" id="isd_products_dashboard">
+                        <setting string="Product Statistics" help="Real-time overview of product library">
+                            <div class="content-group">
+                                <div class="row mt8">
+                                    <div class="col-3 text-center">
+                                        <div class="h1 text-primary">
+                                            <field name="isd_products_total_images"/>
+                                        </div>
+                                        <div class="text-muted">Images</div>
+                                    </div>
+                                    <div class="col-3 text-center">
+                                        <div class="h1 text-success">
+                                            <field name="isd_products_total_videos"/>
+                                        </div>
+                                        <div class="text-muted">Videos / URLs</div>
+                                    </div>
+                                    <div class="col-3 text-center">
+                                        <div class="h1 text-warning">
+                                            <field name="isd_products_total_files"/>
+                                        </div>
+                                        <div class="text-muted">Files</div>
+                                    </div>
+                                    <div class="col-3 text-center">
+                                        <div class="h1 text-info">
+                                            <field name="isd_products_total_categories"/>
+                                        </div>
+                                        <div class="text-muted">Categories</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </setting>
+                    </block>
+
+                    <block title="Limits" id="isd_products_limits">
+                        <setting string="Maximum Image Count" help="Warning threshold for image count (0 = no limit)">
+                            <div class="content-group">
+                                <div class="mt8">
+                                    <field name="isd_products_max_image_count"/>
+                                </div>
+                            </div>
+                        </setting>
+                        <setting string="Maximum Video/URL Count" help="Warning threshold for video, Facebook and YouTube count (0 = no limit)">
+                            <div class="content-group">
+                                <div class="mt8">
+                                    <field name="isd_products_max_video_count"/>
+                                </div>
+                            </div>
+                        </setting>
+                        <setting string="Maximum File Count" help="Warning threshold for file count (0 = no limit)">
+                            <div class="content-group">
+                                <div class="mt8">
+                                    <field name="isd_products_max_file_count"/>
+                                </div>
+                            </div>
+                        </setting>
+                        <setting string="Maximum Image Upload Size (MB)" help="Maximum file size for image uploads">
+                            <div class="content-group">
+                                <div class="mt8">
+                                    <field name="isd_products_max_image_upload_size"/>
+                                </div>
+                            </div>
+                        </setting>
+                        <setting string="Maximum Video Upload Size (MB)" help="Maximum file size for video uploads">
+                            <div class="content-group">
+                                <div class="mt8">
+                                    <field name="isd_products_max_video_upload_size"/>
+                                </div>
+                            </div>
+                        </setting>
+                        <setting string="Maximum File Upload Size (MB)" help="Maximum file size for document uploads (xlsx, pdf, doc, etc.)">
+                            <div class="content-group">
+                                <div class="mt8">
+                                    <field name="isd_products_max_file_upload_size"/>
+                                </div>
+                            </div>
+                        </setting>
+                    </block>
+
+                    <block title="API Settings" id="isd_products_api">
+                        <setting string="API Maximum Return" help="Default and maximum number of records returned per API call">
+                            <div class="content-group">
+                                <div class="mt8">
+                                    <field name="isd_products_api_max_return"/>
+                                </div>
+                            </div>
+                        </setting>
+                        <setting string="View API Documentation" help="View full REST API documentation">
+                            <div class="content-group">
+                                <div class="mt8">
+                                    <button name="action_view_api_documentation" type="object"
+                                            string="View API" class="btn-primary"
+                                            icon="fa-book"/>
+                                </div>
+                            </div>
+                        </setting>
+                    </block>
+
+                    <block title="Storage" id="isd_products_storage">
+                        <setting string="Storage Provider" help="Choose where product files are stored">
+                            <div class="content-group">
+                                <div class="mt8">
+                                    <field name="isd_products_storage_provider" widget="radio"/>
+                                </div>
+                            </div>
+                        </setting>
+                        <setting string="S3 Configuration" help="Amazon S3 connection settings"
+                                 invisible="isd_products_storage_provider != 's3'">
+                            <div class="content-group">
+                                <div class="row mt8">
+                                    <div class="col-6">
+                                        <label for="isd_products_s3_bucket_name"/>
+                                        <field name="isd_products_s3_bucket_name" placeholder="my-product-bucket"/>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="isd_products_s3_region"/>
+                                        <field name="isd_products_s3_region" placeholder="ap-southeast-1"/>
+                                    </div>
+                                </div>
+                                <div class="row mt8">
+                                    <div class="col-6">
+                                        <label for="isd_products_s3_access_key"/>
+                                        <field name="isd_products_s3_access_key"/>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="isd_products_s3_secret_key"/>
+                                        <field name="isd_products_s3_secret_key" password="True"/>
+                                    </div>
+                                </div>
+                                <div class="row mt8">
+                                    <div class="col-6">
+                                        <label for="isd_products_s3_endpoint_url"/>
+                                        <field name="isd_products_s3_endpoint_url" placeholder="Optional (for MinIO, R2...)"/>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="isd_products_s3_public_base_url"/>
+                                        <field name="isd_products_s3_public_base_url" placeholder="Optional CDN URL"/>
+                                    </div>
+                                </div>
+                                <div class="row mt8">
+                                    <div class="col-6">
+                                        <field name="isd_products_s3_use_ssl"/>
+                                        <label for="isd_products_s3_use_ssl"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </setting>
+                    </block>
+
+                    <block title="Allowed Origins" id="isd_products_origins">
+                        <setting string="Allowed Origins" help="Domains allowed to access the Product API. Leave empty to allow all.">
+                            <div class="content-group">
+                                <div class="mt8">
+                                    <field name="isd_products_allowed_origin_ids" nolabel="1">
+                                        <list editable="bottom">
+                                            <field name="name" placeholder="https://portal.company.com"/>
+                                            <field name="active" widget="boolean_toggle"/>
+                                        </list>
+                                    </field>
+                                </div>
+                            </div>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_isd_products_configuration" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="path">isd-product-settings</field>
+        <field name="context">{'module': 'isd_products', 'bin_size': False}</field>
+    </record>
+</odoo>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Product List View -->
+    <record id="view_isd_product_list" model="ir.ui.view">
+        <field name="name">isd.product.list</field>
+        <field name="model">isd.product</field>
+        <field name="arch" type="xml">
+            <list string="Products" default_order="sort_order asc, id desc">
+                <field name="preview_image" widget="image" options="{'size': [60, 60]}" string="Preview"/>
+                <field name="name"/>
+                <field name="product_type" widget="badge"
+                       decoration-info="product_type == 'image'"
+                       decoration-success="product_type == 'video'"
+                       decoration-muted="product_type == 'file'"
+                       decoration-warning="product_type == 'facebook'"
+                       decoration-danger="product_type == 'youtube'"/>
+                <field name="category_ids" widget="many2many_tags"/>
+                <field name="display_size" widget="badge" optional="show"/>
+                <field name="sort_order"/>
+                <field name="file_size_display" string="Size"/>
+                <field name="is_visible" widget="boolean_toggle"/>
+                <field name="active" widget="boolean_toggle"/>
+                <field name="is_published" string="Published" widget="boolean"/>
+                <field name="create_date"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Product Form View -->
+    <record id="view_isd_product_form" model="ir.ui.view">
+        <field name="name">isd.product.form</field>
+        <field name="model">isd.product</field>
+        <field name="arch" type="xml">
+            <form string="Product">
+                <header>
+                    <button name="action_regenerate_thumbnail" string="Regenerate Thumbnail"
+                            type="object" class="btn-secondary"
+                            invisible="product_type != 'video'"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Product Name (optional)"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="product_type" widget="radio"/>
+                            <field name="category_ids" widget="many2many_tags"
+                                   options="{'color_field': 'id'}"
+                                   domain="[('active', '=', True)]"/>
+                            <field name="tag_ids" widget="many2many_tags"/>
+                            <field name="display_size" widget="radio"/>
+                            <field name="sort_order"/>
+                        </group>
+                        <group>
+                            <field name="product_file" filename="file_name"
+                                   invisible="product_type in ('facebook', 'youtube')"/>
+                            <field name="file_name" invisible="1"/>
+                            <field name="external_url" string="URL"
+                                   invisible="product_type not in ('facebook', 'youtube')"
+                                   placeholder="https://..."
+                                   widget="url"/>
+                            <field name="mime_type" invisible="product_type in ('facebook', 'youtube')"/>
+                            <field name="file_size_display" string="File Size"
+                                   invisible="product_type in ('facebook', 'youtube')"/>
+                            <field name="storage_provider"
+                                   invisible="product_type in ('facebook', 'youtube')"/>
+                            <field name="storage_key"
+                                   invisible="product_type in ('facebook', 'youtube')"/>
+                            <field name="public_url" widget="url"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Preview" name="preview">
+                            <field name="product_type" invisible="1"/>
+                            <div invisible="product_type != 'image'">
+                                <field name="product_file" widget="image" class="oe_avatar"
+                                       options="{'size': [600, 400]}"/>
+                            </div>
+                            <div invisible="product_type != 'video'">
+                                <field name="public_url" invisible="1"/>
+                                <div class="text-muted" invisible="not public_url">
+                                    Video preview available at the public URL above.
+                                </div>
+                            </div>
+                            <div invisible="product_type != 'file'">
+                                <div class="text-muted">
+                                    File available for download at the public URL above.
+                                </div>
+                            </div>
+                            <div invisible="product_type not in ('facebook', 'youtube')">
+                                <field name="external_url" invisible="1"/>
+                                <div class="text-muted" invisible="not external_url">
+                                    External content available at the URL above.
+                                </div>
+                            </div>
+                        </page>
+                        <page string="Thumbnail" name="thumbnail" invisible="product_type == 'image'">
+                            <group>
+                                <field name="thumbnail" widget="image" options="{'size': [256, 256]}"/>
+                            </group>
+                        </page>
+                        <page string="Description" name="description">
+                            <group>
+                                <field name="description" placeholder="Shown on the website via the API"/>
+                                <field name="note" placeholder="Internal note, not returned by the public list API"/>
+                            </group>
+                        </page>
+                        <page string="Publishing" name="publishing">
+                            <group>
+                                <group>
+                                    <field name="publish_from"/>
+                                    <field name="publish_to"/>
+                                </group>
+                                <group>
+                                    <field name="is_published" widget="badge"
+                                           decoration-success="is_published"
+                                           decoration-danger="not is_published"/>
+                                    <field name="is_visible" widget="boolean_toggle"/>
+                                    <field name="active"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Product Search View -->
+    <record id="view_isd_product_search" model="ir.ui.view">
+        <field name="name">isd.product.search</field>
+        <field name="model">isd.product</field>
+        <field name="arch" type="xml">
+            <search string="Search Products">
+                <field name="name"/>
+                <field name="file_name"/>
+                <field name="category_ids"/>
+                <field name="tag_ids"/>
+                <filter name="images" string="Images" domain="[('product_type', '=', 'image')]"/>
+                <filter name="videos" string="Videos" domain="[('product_type', '=', 'video')]"/>
+                <filter name="files" string="Files" domain="[('product_type', '=', 'file')]"/>
+                <filter name="facebook" string="Facebook" domain="[('product_type', '=', 'facebook')]"/>
+                <filter name="youtube" string="YouTube" domain="[('product_type', '=', 'youtube')]"/>
+                <separator/>
+                <filter name="published" string="Published" domain="[('is_published', '=', True)]"/>
+                <filter name="not_published" string="Not Published" domain="[('is_published', '=', False)]"/>
+                <separator/>
+                <filter name="visible" string="Visible" domain="[('is_visible', '=', True)]"/>
+                <filter name="hidden" string="Hidden" domain="[('is_visible', '=', False)]"/>
+                <separator/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_type" string="Type" context="{'group_by': 'product_type'}"/>
+                    <filter name="group_provider" string="Storage" context="{'group_by': 'storage_provider'}"/>
+                    <filter name="group_create_date" string="Create Date" context="{'group_by': 'create_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Product Action -->
+    <record id="action_isd_product" model="ir.actions.act_window">
+        <field name="name">Products</field>
+        <field name="res_model">isd.product</field>
+        <field name="view_mode">list,form</field>
+        <field name="path">isd-products</field>
+        <field name="search_view_id" ref="view_isd_product_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add your first product
+            </p>
+            <p>Upload images, videos and files for your products.</p>
+        </field>
+    </record>
+</odoo>
