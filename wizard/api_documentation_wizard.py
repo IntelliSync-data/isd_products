@@ -115,6 +115,7 @@ class IsdProductApiDocWizard(models.TransientModel):
             "description": "Plain text description",
             "type": "image",
             "display_size": "medium",
+            "is_visible": true,
             "categories": [{"id": 1, "name": "Electronics"}],
             "tags": [{"id": 1, "name": "featured"}],
             "url": "/isd_products/file/product/abc123.jpg",
@@ -171,7 +172,7 @@ curl -X GET "%(base_url)s/api/v1/products?categoryId=1"</pre>
             </table>
 
             <h4>Response</h4>
-            <p>The updated product, same shape as the list API plus <code>note</code> and <code>is_visible</code>.
+            <p>The updated product, same shape as the list API plus the internal <code>note</code>.
             Unknown fields, wrong types or unknown IDs return <code>400</code>; a missing product returns <code>404</code>.</p>
 
             <h4>cURL Example</h4>

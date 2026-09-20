@@ -88,7 +88,6 @@ class ProductService:
 
         result = self._serialize_product(product)
         result['note'] = product.note or ''
-        result['is_visible'] = product.is_visible
         return result
 
     def _parse_field(self, key, value):
@@ -161,6 +160,7 @@ class ProductService:
             'description': record.description or '',
             'type': record.product_type,
             'display_size': record.display_size or 'medium',
+            'is_visible': record.is_visible,
             'categories': categories,
             'tags': tags,
             'url': record.public_url or '',
