@@ -103,7 +103,9 @@ class IsdProductApiController(http.Controller):
 
     @http.route('/api/v1/products', type='http', auth='public', methods=['GET'], csrf=False)
     def get_products(self, **kwargs):
-        origin_error = self._check_origin()
+        include_hidden = str(kwargs.get('include_hidden', '')).lower() in ('1', 'true', 'yes')
+        # Hidden products are not public data, so this needs the same origin check as the write API
+        origin_error = self._check_origin(strict=include_hidden)
         if origin_error:
             return origin_error
 
@@ -113,7 +115,8 @@ class IsdProductApiController(http.Controller):
             category_id = int(kwargs.get('categoryId', 0)) or None
 
             service = ProductService(request.env)
-            result = service.get_product_list(page=page, limit=limit, category_id=category_id)
+            result = service.get_product_list(
+                page=page, limit=limit, category_id=category_id, include_hidden=include_hidden)
 
             meta = {
                 'page': result['page'],

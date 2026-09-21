@@ -111,6 +111,12 @@ class TestProductService(ProductTestBase):
         self.assertIn(visible.id, ids)
         self.assertNotIn(hidden.id, ids)
 
+    def test_include_hidden_returns_hidden_products(self):
+        hidden = self._create_image(name='Hidden', is_visible=False)
+        result = ProductService(self.env).get_product_list(include_hidden=True)
+        item = next(i for i in result['items'] if i['id'] == hidden.id)
+        self.assertFalse(item['is_visible'])
+
     def test_list_returns_description_but_not_note(self):
         product = self._create_image(description='Public text', note='Internal text')
         item = next(i for i in ProductService(self.env).get_product_list()['items'] if i['id'] == product.id)

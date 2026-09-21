@@ -23,7 +23,7 @@ class ProductService:
         self.env = env
         self.ICP = env['ir.config_parameter'].sudo()
 
-    def get_product_list(self, page=1, limit=None, category_id=None):
+    def get_product_list(self, page=1, limit=None, category_id=None, include_hidden=False):
         max_return = int(self.ICP.get_param('isd_products.api_max_return', '100'))
 
         if not limit or limit <= 0:
@@ -33,7 +33,9 @@ class ProductService:
         if page < 1:
             page = 1
 
-        domain = [('active', '=', True), ('is_visible', '=', True), ('is_published', '=', True)]
+        domain = [('active', '=', True), ('is_published', '=', True)]
+        if not include_hidden:
+            domain.append(('is_visible', '=', True))
         domain.append(('category_ids.active', '=', True))
 
         if category_id:

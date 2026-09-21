@@ -35,7 +35,7 @@ StorageProvider (abstract)
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | `/api/v1/products/categories` | List active categories |
-| GET | `/api/v1/products` | List active, visible, published products (paginated, `page`, `limit`, `categoryId`) |
+| GET | `/api/v1/products` | List active, visible, published products (paginated, `page`, `limit`, `categoryId`). Add `include_hidden=1` to also get hidden ones — that variant requires a matching `Origin` header, like the PUT API |
 | GET | `/api/v1/products/version` | Get data version for cache check |
 | PUT | `/api/v1/products/<id>` | Edit a product (see below) |
 

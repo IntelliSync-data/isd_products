@@ -95,6 +95,12 @@ class IsdProductApiDocWizard(models.TransientModel):
                         <td style="padding: 8px 12px; border: 1px solid #ddd;">Integer</td>
                         <td style="padding: 8px 12px; border: 1px solid #ddd;">Filter by category ID</td>
                     </tr>
+                    <tr>
+                        <td style="padding: 8px 12px; border: 1px solid #ddd;"><code>include_hidden</code></td>
+                        <td style="padding: 8px 12px; border: 1px solid #ddd;">1 / true</td>
+                        <td style="padding: 8px 12px; border: 1px solid #ddd;">Also return hidden products (<code>is_visible: false</code>).
+                            Requires an <code>Origin</code> header matching the Allowed Origins, like the PUT API, otherwise it returns <code>403</code>.</td>
+                    </tr>
                 </tbody>
             </table>
 
@@ -219,7 +225,7 @@ curl -X GET "%(base_url)s/api/v1/products?categoryId=1"</pre>
             <ul style="line-height: 2;">
                 <li>The list API only returns <strong>active</strong> and <strong>visible</strong> products in active categories</li>
                 <li>Products must be within their <strong>publish schedule</strong> to be returned</li>
-                <li>Hidden and archived products are never returned by the list API, but can still be edited via PUT</li>
+                <li>Archived products are never returned; hidden products only with <code>include_hidden=1</code>, but both can still be edited via PUT</li>
                 <li>If <code>limit</code> exceeds API Maximum Return, it is clamped to the maximum</li>
                 <li>Read APIs check the origin only when an <code>Origin</code> header is sent and Allowed Origins are configured</li>
                 <li>The PUT API always requires a matching <code>Origin</code> header</li>

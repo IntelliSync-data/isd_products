@@ -72,6 +72,19 @@ class TestProductApi(HttpCase):
         self.assertEqual(data['meta']['page'], 1)
         self.assertEqual(data['meta']['limit'], 5)
 
+    def test_include_hidden_rejected_without_origin(self):
+        self._allow_origin()
+        response = self.url_open('/api/v1/products?include_hidden=1')
+        self.assertEqual(response.status_code, 403)
+
+    def test_include_hidden_with_allowed_origin(self):
+        self._allow_origin()
+        self.product.is_visible = False
+        response = self.url_open(
+            '/api/v1/products?include_hidden=1', headers={'Origin': self.ALLOWED_ORIGIN})
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(self.product.id, [p['id'] for p in response.json()['data']])
+
     def test_get_version(self):
         response = self.url_open('/api/v1/products/version')
         self.assertEqual(response.status_code, 200)
