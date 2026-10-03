@@ -32,7 +32,10 @@ jobs:
 
           # Sync isd_products directory with rsync (including deletions)
           sudo mkdir -p /opt/custom-addons/isd_products
-          sudo rsync -av --delete ~/addons-system/isd_products/ /opt/custom-addons/isd_products/
+          sudo rsync -av --delete \
+            --exclude='views/menu_items_override.xml.*' \
+            --exclude='__manifest__.py.*' \
+            ~/addons-system/isd_products/ /opt/custom-addons/isd_products/
 
     - name: Update isd_products Module
       uses: appleboy/ssh-action@master

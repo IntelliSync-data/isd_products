@@ -30,6 +30,12 @@ jobs:
             git fetch origin && git reset --hard origin/bloompod
           fi
 
+          # Apply branch-specific override files
+          cp ~/addons-system/isd_products/views/menu_items_override.xml.bloompod \
+             ~/addons-system/isd_products/views/menu_items_override.xml
+          cp ~/addons-system/isd_products/__manifest__.py.bloompod \
+             ~/addons-system/isd_products/__manifest__.py
+
           # Sync isd_products directory with rsync (including deletions)
           sudo mkdir -p ~/custom-addons/isd_products
           sudo rsync -av --delete \

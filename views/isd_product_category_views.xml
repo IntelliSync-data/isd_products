@@ -5,7 +5,7 @@
         <field name="model">isd.product.category</field>
         <field name="arch" type="xml">
             <list string="Categories" default_order="sort_order asc">
-                <field name="avatar" widget="image" options="{'size': [40, 40]}"/>
+                <field name="avatar" widget="image" options="{'size': [40, 40]}" optional="hide"/>
                 <field name="name"/>
                 <field name="description"/>
                 <field name="sort_order"/>

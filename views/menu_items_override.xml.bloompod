@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- BloomPod wording: a product here is a child, so the module says so.
+         Copied over views/menu_items_override.xml by the bloompod workflow and
+         loaded only by __manifest__.py.bloompod, so main and vfo never see it. -->
+
+    <!-- Menus -->
+    <record id="menu_isd_products_root" model="ir.ui.menu">
+        <field name="name">Children (by ISD)</field>
+    </record>
+    <record id="menu_isd_products_upload" model="ir.ui.menu">
+        <field name="name">Children</field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_isd_product" model="ir.actions.act_window">
+        <field name="name">Children</field>
+    </record>
+
+    <!-- List, form and search titles -->
+    <record id="view_isd_product_list_bloompod" model="ir.ui.view">
+        <field name="name">isd.product.list.bloompod</field>
+        <field name="model">isd.product</field>
+        <field name="inherit_id" ref="isd_products.view_isd_product_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="attributes">
+                <attribute name="string">Children</attribute>
+            </xpath>
+            <xpath expr="//field[@name='product_type']" position="attributes">
+                <attribute name="string">Media Type</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_isd_product_form_bloompod" model="ir.ui.view">
+        <field name="name">isd.product.form.bloompod</field>
+        <field name="model">isd.product</field>
+        <field name="inherit_id" ref="isd_products.view_isd_product_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="string">Child</attribute>
+            </xpath>
+            <xpath expr="//field[@name='product_type']" position="attributes">
+                <attribute name="string">Media Type</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_isd_product_search_bloompod" model="ir.ui.view">
+        <field name="name">isd.product.search.bloompod</field>
+        <field name="model">isd.product</field>
+        <field name="inherit_id" ref="isd_products.view_isd_product_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="attributes">
+                <attribute name="string">Search Children</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- A category counts children, not products -->
+    <record id="view_isd_product_category_list_bloompod" model="ir.ui.view">
+        <field name="name">isd.product.category.list.bloompod</field>
+        <field name="model">isd.product.category</field>
+        <field name="inherit_id" ref="isd_products.view_isd_product_category_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_count']" position="attributes">
+                <attribute name="string">Children</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_isd_product_category_form_bloompod" model="ir.ui.view">
+        <field name="name">isd.product.category.form.bloompod</field>
+        <field name="model">isd.product.category</field>
+        <field name="inherit_id" ref="isd_products.view_isd_product_category_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_count']" position="attributes">
+                <attribute name="string">Children</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
