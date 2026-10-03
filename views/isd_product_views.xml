@@ -8,20 +8,17 @@
             <list string="Products" default_order="sort_order asc, id desc">
                 <field name="preview_image" widget="image" options="{'size': [60, 60]}" string="Preview"/>
                 <field name="name"/>
-                <field name="product_type" widget="badge"
+                <field name="product_type" widget="badge" optional="hide"
                        decoration-info="product_type == 'image'"
                        decoration-success="product_type == 'video'"
                        decoration-muted="product_type == 'file'"
                        decoration-warning="product_type == 'facebook'"
                        decoration-danger="product_type == 'youtube'"/>
                 <field name="category_ids" widget="many2many_tags"/>
-                <field name="display_size" widget="badge" optional="show"/>
+                <field name="display_size" widget="badge" optional="hide"/>
                 <field name="sort_order"/>
-                <field name="file_size_display" string="Size"/>
                 <field name="is_visible" widget="boolean_toggle"/>
-                <field name="active" widget="boolean_toggle"/>
-                <field name="is_published" string="Published" widget="boolean"/>
-                <field name="create_date"/>
+                <field name="create_date" optional="hide"/>
             </list>
         </field>
     </record>
